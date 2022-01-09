@@ -200,7 +200,10 @@ Function sum(Function _a){
 }
 bool operator ==(Function _a,Function _b){
     for(int i=max(_a.l,_b.l);i<=min(_a.r,_b.r);i++){
-        if(_a[i]!=_b[i]) return 0;
+        if(_a[i]!=_b[i]){
+            cout<<_a.name<<"["<<i<<"]="<<_a[i]<<" and "<<_b.name<<"["<<i<<"]="<<_b[i]<<endl;
+            return 0;
+        }
     }
     return 1;
 }
@@ -471,6 +474,85 @@ signed main(){
                 cout<<"No such Function."<<endl;
             }
         }
+        else if(op=="modify"||op=="m"){
+            cout<<"Input your Function >> ";
+            string nm;
+            cin>>nm;
+            int f=find(nm);
+            if(f){
+                cout<<"Input location >> ";
+                int loc;
+                cin>>loc;
+                if(loc<a[f].l||loc>a[f].r){
+                    cout<<"Over the bound."<<endl;
+                    continue;
+                }
+                cout<<"Input new value >> ";
+                int val;
+                cin>>val;
+                a[f][loc]=val;
+            }
+            else{
+                cout<<"No such Function."<<endl;
+            }
+        }
+        else if(op=="copy"||op=="c"){
+            cout<<"Input your Function >> ";
+            string nm;
+            cin>>nm;
+            int f=find(nm);
+            if(f){
+                a[++cnt]=a[f];
+                cout<<"Name your new Function >> ";
+                string nm;
+                cin>>nm;
+                while(find(nm)){
+                    cout<<"Name already used."<<endl;
+                    cout<<"Input a new one >> ";
+                    cin>>nm;
+                }
+                a[cnt].name=nm;
+            }
+            else{
+                cout<<"No such Function."<<endl;
+            }
+        }
+        else if(op=="delete"||op=="d"){
+            cout<<"Input your Function >> ";
+            string nm;
+            cin>>nm;
+            int f=find(nm);
+            if(f){
+                a[f].reset();
+                a[f].name="";
+            }
+            else{
+                cout<<"No such Function."<<endl;
+            }
+        }
+        else if(op=="exit"||op=="e"){
+            break;
+        }
+        else if(op=="rename"||op=="r"){
+            cout<<"Input your Function >> ";
+            string nm;
+            cin>>nm;
+            int f=find(nm);
+            if(f){
+                cout<<"Input new name >> ";
+                string nm;
+                cin>>nm;
+                while(find(nm)){
+                    cout<<"Name already used."<<endl;
+                    cout<<"Input a new one >> ";
+                    cin>>nm;
+                }
+                a[f].name=nm;
+            }
+            else{
+                cout<<"No such Function."<<endl;
+            }
+        }
         else if(op=="?"||op=="help"||op=="h"){
             cout<<"This is xyf's maths theory calculator."<<endl;
             cout<<"You can use the following commands:"<<endl;
@@ -487,6 +569,9 @@ signed main(){
             cout<<"save: Save a Function."<<endl;
             cout<<"?/help/h: Show this help."<<endl;
             cout<<"exit/quit/q: Exit the program."<<endl;
+            cout<<"modify/m: Modify a value of a Function."<<endl;
+            cout<<"copy/c: Copy a Function."<<endl;
+            cout<<"rename/r: Rename a Function."<<endl;
             cout<<"Thanks for using."<<endl;
         }
         else{
